@@ -19,7 +19,8 @@ export async function processWebhook(rawBody: string, headers: { signature: stri
     
     if (!isValid) {
       logError('webhook', 'Invalid signature', { signature: headers.signature });
-      // Depending on strictness, we might throw here. For now, we continue in mock mode if it returns true.
+      await markError(logId, 'Invalid webhook signature');
+      return { success: true, message: 'Invalid signature' };
     }
 
     // 2. Parse payload

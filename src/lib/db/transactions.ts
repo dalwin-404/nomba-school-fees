@@ -97,6 +97,26 @@ export async function findByNombaTxnRef(ref: string): Promise<Transaction | null
   return data;
 }
 
+export async function findById(id: string): Promise<any | null> {
+  const supabase = createServiceClient();
+  const { data, error } = await supabase
+    .from('transactions')
+    .select(`
+      *,
+      students!inner (first_name, last_name, class_level),
+      virtual_accounts!inner (account_number),
+      schools!inner (name)
+    `)
+    .eq('id', id)
+    .single();
+
+  if (error && error.code !== 'PGRST116') {
+    logError('db:transactions', 'Error finding transaction by id', { error, id });
+    throw error;
+  }
+  return data;
+}
+
 export async function create(data: TransactionCreate): Promise<Transaction> {
   const supabase = createServiceClient();
   const { data: txn, error } = await supabase

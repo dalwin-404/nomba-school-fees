@@ -144,7 +144,10 @@ export default function StudentDetailPage({ params }: { params: Promise<{ id: st
         <div className="lg:col-span-2 space-y-4">
           <h3 className="font-semibold text-lg">Transaction History</h3>
           <TransactionTable 
-            transactions={transactions} 
+            transactions={transactions?.map((t: any) => ({
+              ...t,
+              students: t.students || { first_name: student.first_name, last_name: student.last_name }
+            }))} 
             loading={false} 
             emptyMessage="No payments received yet."
           />

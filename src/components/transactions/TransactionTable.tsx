@@ -1,6 +1,8 @@
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/Table';
 import { Badge } from '@/components/ui/Badge';
 import { formatNaira } from '@/lib/constants';
+import Link from 'next/link';
+import { FileText } from 'lucide-react';
 
 interface TransactionTableProps {
   transactions: any[];
@@ -43,12 +45,13 @@ export function TransactionTable({ transactions, loading, emptyMessage = "No tra
             <TableHead>Sender</TableHead>
             <TableHead className="text-right">Amount</TableHead>
             <TableHead>Status</TableHead>
+            <TableHead className="text-right">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {transactions.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={5} className="h-32 text-center text-muted-foreground">
+              <TableCell colSpan={6} className="h-32 text-center text-muted-foreground">
                 {emptyMessage}
               </TableCell>
             </TableRow>
@@ -64,7 +67,10 @@ export function TransactionTable({ transactions, loading, emptyMessage = "No tra
                       {txn.students.first_name} {txn.students.last_name}
                     </div>
                   )}
-                  <div className="font-mono text-xs text-muted-foreground bg-muted inline-block px-1.5 py-0.5 rounded">
+                  <div 
+                    className="font-mono text-xs text-muted-foreground bg-muted inline-block px-1.5 py-0.5 rounded max-w-[100px] sm:max-w-[150px] truncate align-bottom"
+                    title={txn.nomba_txn_ref}
+                  >
                     {txn.nomba_txn_ref}
                   </div>
                 </TableCell>
@@ -77,6 +83,20 @@ export function TransactionTable({ transactions, loading, emptyMessage = "No tra
                 </TableCell>
                 <TableCell>
                   {getStatusBadge(txn.status)}
+                </TableCell>
+                <TableCell className="text-right">
+                  {txn.status === 'confirmed' || txn.status === 'SUCCESSFUL' ? (
+                    <Link 
+                      href={`/dashboard/transactions/${txn.id}/receipt`}
+                      target="_blank"
+                      className="inline-flex items-center justify-center p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                      title="Print Receipt"
+                    >
+                      <FileText size={18} />
+                    </Link>
+                  ) : (
+                    <span className="text-muted-foreground/30"><FileText size={18} /></span>
+                  )}
                 </TableCell>
               </TableRow>
             ))

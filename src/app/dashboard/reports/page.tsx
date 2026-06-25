@@ -6,6 +6,7 @@ import { DashboardStats } from '@/components/dashboard/DashboardStats';
 import { ReconciliationSummary } from '@/components/dashboard/ReconciliationSummary';
 import { Button } from '@/components/ui/Button';
 import { Alert } from '@/components/ui/Alert';
+import { Download } from 'lucide-react';
 
 export default function ReportsPage() {
   const { stats, loading, error, fetchDashboard } = useDashboard();
@@ -30,7 +31,7 @@ export default function ReportsPage() {
 
     const csvContent = [
       headers.join(','),
-      ...rows.map((row: any[]) => row.join(','))
+      ...rows.map((row: any[]) => row.map((val) => '"' + String(val).replace(/"/g, '""') + '"').join(','))
     ].join('\n');
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -52,7 +53,7 @@ export default function ReportsPage() {
           <p className="text-sm text-muted-foreground">Comprehensive view of fee collection</p>
         </div>
         <Button onClick={handleExportCSV} disabled={loading || !stats?.students?.length}>
-          📥 Export CSV
+          <Download size={16} className="mr-2" /> Export CSV
         </Button>
       </div>
 

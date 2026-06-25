@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Inter } from "next/font/google";
 import { SupabaseProvider } from "@/components/providers/SupabaseProvider";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "SchoolPay - Student Fee Tracker",
@@ -14,10 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="antialiased" suppressHydrationWarning>
-      <body className="min-h-screen bg-background text-foreground selection:bg-primary/30">
-        <SupabaseProvider>
-          {children}
-        </SupabaseProvider>
+      <body className={`${inter.className} min-h-screen bg-background text-foreground selection:bg-primary/30`}>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+          <SupabaseProvider>
+            {children}
+          </SupabaseProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

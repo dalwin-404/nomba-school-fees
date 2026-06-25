@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
-import { LayoutDashboard, Users, CreditCard, FileText, Zap, LogOut } from 'lucide-react';
+import { LayoutDashboard, Users, CreditCard, FileText, GraduationCap, LogOut } from 'lucide-react';
 
 export function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen: boolean, setMobileOpen: (open: boolean) => void }) {
   const pathname = usePathname();
@@ -30,40 +30,48 @@ export function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen: boolean, se
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         } flex flex-col`}
       >
-        <div className="flex h-16 items-center justify-center border-b border-white/10 px-6">
-          <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-            <Zap className="text-primary" size={24} />
+        <div className="flex h-20 items-center justify-center border-b border-border px-6">
+          <div className="flex items-center justify-center w-10 h-10 bg-slate-100 dark:bg-slate-800 rounded-full shadow-sm">
+            <GraduationCap className="text-[#6d28d9]" size={22} />
+          </div>
+          <h1 className="ml-3 text-xl font-bold tracking-tight text-foreground hidden md:block">
             SchoolPay
           </h1>
         </div>
 
-        <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+        <nav className="flex-1 overflow-y-auto py-8 px-4 space-y-2">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
+            const isActive = link.href === '/dashboard' 
+              ? pathname === '/dashboard' 
+              : pathname === link.href || pathname.startsWith(`${link.href}/`);
             return (
               <Link
                 key={link.name}
                 href={link.href}
-                className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                className={`flex items-center gap-4 rounded-full px-4 py-3 text-sm font-medium transition-colors ${
                   isActive 
-                    ? 'bg-sidebar-active text-white' 
-                    : 'text-sidebar-text hover:bg-sidebar-hover hover:text-white'
+                    ? 'bg-sidebar-active text-white shadow-md shadow-sidebar-active/20' 
+                    : 'text-sidebar-text hover:bg-sidebar-hover hover:text-foreground'
                 }`}
                 onClick={() => setMobileOpen(false)}
               >
-                <span className="flex items-center justify-center w-6 h-6">{link.icon}</span>
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full ${isActive ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-sidebar-text'}`}>
+                  {link.icon}
+                </div>
                 {link.name}
               </Link>
             );
           })}
         </nav>
 
-        <div className="border-t border-white/10 p-4">
+        <div className="border-t border-border p-4">
           <button
             onClick={signOut}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors"
+            className="flex w-full items-center gap-4 rounded-full px-4 py-3 text-sm font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-600 dark:hover:text-red-400 transition-colors"
           >
-            <LogOut size={20} />
+            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30">
+              <LogOut size={18} />
+            </div>
             Log Out
           </button>
         </div>

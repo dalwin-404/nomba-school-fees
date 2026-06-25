@@ -54,17 +54,17 @@ export function DashboardStats({ stats }: { stats: DashboardStatsProps | null })
   ];
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
       {cards.map((card) => (
-        <Card key={card.title} className="p-6 transition-default hover:-translate-y-1 hover:shadow-lg">
-          <div className="flex items-center gap-4">
-            <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${card.bgClass} ${card.colorClass} text-2xl`}>
-              {card.icon}
+        <Card key={card.title} className="p-6 transition-default hover:-translate-y-1 hover:shadow-lg flex items-center gap-5">
+          <div className="flex-shrink-0 flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-slate-600">
+            {card.icon}
+          </div>
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <p className="text-2xl font-bold text-foreground leading-none">{card.value}</p>
             </div>
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">{card.title}</p>
-              <p className="text-2xl font-bold text-foreground mt-1">{card.value}</p>
-            </div>
+            <p className="text-xs font-medium text-muted-foreground leading-tight">{card.title}</p>
           </div>
         </Card>
       ))}
