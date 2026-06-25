@@ -105,7 +105,7 @@ export function Header({ setMobileOpen }: { setMobileOpen: (open: boolean) => vo
           </button>
           
           {showNotifications && (
-            <div className="absolute right-0 mt-2 w-80 bg-card rounded-2xl shadow-xl border border-border overflow-hidden z-50 animate-fade-in">
+            <div className="fixed top-20 left-4 right-4 sm:absolute sm:top-auto sm:left-auto sm:right-0 mt-2 sm:w-80 bg-card rounded-2xl shadow-xl border border-border overflow-hidden z-50 animate-fade-in">
               <div className="p-4 border-b border-border bg-muted/30">
                 <h3 className="font-semibold text-foreground">Recent Payments</h3>
               </div>
@@ -131,8 +131,8 @@ export function Header({ setMobileOpen }: { setMobileOpen: (open: boolean) => vo
           )}
         </div>
         
-        <Link href="/dashboard/settings" className="flex items-center gap-3 ml-2 p-1 pr-4 rounded-full bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-shadow border border-slate-100 dark:border-slate-700 cursor-pointer">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1d4ed8] text-white font-bold shadow-inner">
+        <Link href="/dashboard/settings" className="flex items-center gap-3 ml-1 sm:ml-2 p-1 md:pr-4 rounded-full bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-shadow border border-slate-100 dark:border-slate-700 cursor-pointer">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1d4ed8] text-white font-bold shadow-inner">
             {getInitial()}
           </div>
           <div className="hidden md:flex flex-col">

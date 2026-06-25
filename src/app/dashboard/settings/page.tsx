@@ -48,9 +48,9 @@ export default function SettingsPage() {
 
   return (
     <div className="max-w-4xl space-y-6">
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-foreground">Settings</h2>
-        <p className="text-muted-foreground mt-1">Manage your school profile and account settings.</p>
+      <div className="mb-6 sm:mb-8">
+        <h2 className="text-xl sm:text-2xl font-bold text-foreground">Settings</h2>
+        <p className="text-sm sm:text-base text-muted-foreground mt-1">Manage your school profile and account settings.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
