@@ -4,6 +4,8 @@ import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@
 import { Input } from '@/components/ui/Input';
 import { PaymentStatusBadge } from '@/components/dashboard/PaymentStatusBadge';
 import { formatNaira } from '@/lib/constants';
+import { LayoutGrid, List } from 'lucide-react';
+import { StudentCard } from '@/components/students/StudentCard';
 
 interface StudentTableProps {
   students: any[];
@@ -13,6 +15,7 @@ interface StudentTableProps {
 export function StudentTable({ students, loading }: StudentTableProps) {
   const router = useRouter();
   const [search, setSearch] = useState('');
+  const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
 
   const filtered = students.filter(s => {
     const fullName = `${s.first_name} ${s.last_name}`.toLowerCase();
@@ -27,8 +30,8 @@ export function StudentTable({ students, loading }: StudentTableProps) {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <div className="w-full max-w-sm">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="w-full sm:w-80">
           <Input 
             placeholder="Search by name or NUBAN..." 
             value={search}
@@ -40,9 +43,38 @@ export function StudentTable({ students, loading }: StudentTableProps) {
             }
           />
         </div>
+        <div className="hidden sm:flex items-center bg-muted p-1 rounded-lg border border-border">
+          <button
+            onClick={() => setViewMode('grid')}
+            className={`p-1.5 rounded-md flex items-center transition-all ${viewMode === 'grid' ? 'bg-card shadow-sm text-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+            title="Grid View"
+          >
+            <LayoutGrid size={18} />
+          </button>
+          <button
+            onClick={() => setViewMode('table')}
+            className={`p-1.5 rounded-md flex items-center transition-all ${viewMode === 'table' ? 'bg-card shadow-sm text-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+            title="Table View"
+          >
+            <List size={18} />
+          </button>
+        </div>
       </div>
 
-      <div className="bg-card border border-border rounded-xl overflow-hidden shadow-sm">
+      {viewMode === 'grid' ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filtered.length === 0 ? (
+            <div className="col-span-full h-32 flex items-center justify-center text-muted-foreground border border-dashed border-border rounded-xl">
+              {search ? 'No students match your search.' : 'No students found. Add one to get started!'}
+            </div>
+          ) : (
+            filtered.map((student) => (
+              <StudentCard key={student.id} student={student} />
+            ))
+          )}
+        </div>
+      ) : (
+        <div className="bg-card border border-border rounded-xl overflow-hidden shadow-sm">
         <Table>
           <TableHeader>
             <TableRow>
@@ -100,6 +132,7 @@ export function StudentTable({ students, loading }: StudentTableProps) {
           </TableBody>
         </Table>
       </div>
+      )}
     </div>
   );
 }

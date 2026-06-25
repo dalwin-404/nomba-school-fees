@@ -36,8 +36,10 @@ export function TransactionTable({ transactions, loading, emptyMessage = "No tra
   };
 
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden shadow-sm">
-      <Table>
+    <div className="space-y-4">
+      {/* Desktop/Tablet Table View */}
+      <div className="hidden md:block bg-card border border-border rounded-xl overflow-hidden shadow-sm">
+        <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Date & Time</TableHead>
@@ -102,7 +104,52 @@ export function TransactionTable({ transactions, loading, emptyMessage = "No tra
             ))
           )}
         </TableBody>
-      </Table>
+        </Table>
+      </div>
+
+      {/* Mobile Card View */}
+      <div className="block md:hidden space-y-4">
+        {transactions.length === 0 ? (
+          <div className="bg-card border border-border rounded-xl p-8 text-center text-muted-foreground">
+            {emptyMessage}
+          </div>
+        ) : (
+          transactions.map((txn) => (
+            <div key={txn.id} className="bg-card border border-border rounded-xl p-4 shadow-sm space-y-3">
+              <div className="flex justify-between items-start">
+                <div>
+                  <div className="font-medium text-foreground">
+                    {txn.students ? `${txn.students.first_name} ${txn.students.last_name}` : 'Unknown Student'}
+                  </div>
+                  <div className="font-mono text-xs text-muted-foreground mt-0.5 max-w-[200px] truncate">
+                    {txn.nomba_txn_ref}
+                  </div>
+                </div>
+                {getStatusBadge(txn.status)}
+              </div>
+              
+              <div className="flex justify-between items-center text-sm border-t border-border pt-3">
+                <div className="text-muted-foreground">
+                  <div>{formatDate(txn.received_at)}</div>
+                  <div className="text-xs mt-0.5">{txn.sender_name || 'Unknown'} • <span className="capitalize">{txn.payment_method || 'transfer'}</span></div>
+                </div>
+                <div className="text-right flex flex-col items-end">
+                  <div className="font-bold text-foreground mb-1">{formatNaira(txn.amount)}</div>
+                  {txn.status === 'confirmed' || txn.status === 'SUCCESSFUL' ? (
+                    <Link 
+                      href={`/dashboard/transactions/${txn.id}/receipt`}
+                      target="_blank"
+                      className="text-primary text-xs hover:underline flex items-center gap-1"
+                    >
+                      <FileText size={14} /> Receipt
+                    </Link>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }

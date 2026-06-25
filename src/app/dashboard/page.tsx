@@ -6,7 +6,7 @@ import { useDashboard } from '@/hooks/useDashboard';
 import { useReconciliation } from '@/hooks/useReconciliation';
 import { DashboardStats } from '@/components/dashboard/DashboardStats';
 import { ReconciliationSummary } from '@/components/dashboard/ReconciliationSummary';
-import { StudentCard } from '@/components/dashboard/StudentCard';
+import { StudentCard } from '@/components/students/StudentCard';
 import { Button } from '@/components/ui/Button';
 import { Alert } from '@/components/ui/Alert';
 import { FlaskConical, RefreshCw, Plus } from 'lucide-react';
