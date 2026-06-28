@@ -1,17 +1,19 @@
 import { useAuth } from '@/hooks/useAuth';
-import { usePathname } from 'next/navigation';
-import { Bell, Moon, Sun } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { Bell, Moon, Sun, Search, Plus, Command } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
 
-export function Header({ setMobileOpen }: { setMobileOpen: (open: boolean) => void }) {
+export function Header({ setMobileOpen, isCollapsed }: { setMobileOpen: (open: boolean) => void, isCollapsed?: boolean }) {
   const pathname = usePathname();
+  const router = useRouter();
   const { user } = useAuth();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -46,6 +48,15 @@ export function Header({ setMobileOpen }: { setMobileOpen: (open: boolean) => vo
     
     fetchNotifications();
   }, []);
+
+  // Handle global search submission
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      // Route to unified search page
+      router.push(`/dashboard/search?q=${encodeURIComponent(searchQuery)}`);
+    }
+  };
   
   // Create a readable title based on path
   const getPageTitle = () => {
@@ -78,12 +89,38 @@ export function Header({ setMobileOpen }: { setMobileOpen: (open: boolean) => vo
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
         </button>
-        <h1 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl animate-fade-in">
+        <h1 className="hidden sm:block text-xl font-semibold tracking-tight text-foreground sm:text-2xl animate-fade-in whitespace-nowrap">
           {getPageTitle()}
         </h1>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex-1 max-w-xl mx-4 hidden md:block">
+        <form onSubmit={handleSearch} className="relative group">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <Search size={16} className="text-muted-foreground group-focus-within:text-primary transition-colors" />
+          </div>
+          <input
+            type="text"
+            className="block w-full pl-10 pr-12 py-2.5 border border-border rounded-xl leading-5 bg-muted/30 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all sm:text-sm"
+            placeholder="Search students, transactions..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+            <kbd className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-muted border border-border text-muted-foreground">
+              <Command size={10} className="mr-0.5" /> K
+            </kbd>
+          </div>
+        </form>
+      </div>
+
+      <div className="flex items-center gap-2 sm:gap-3">
+        <Link href="/dashboard/students/new">
+          <button className="hidden sm:flex items-center gap-2 bg-[#059669] hover:bg-[#047857] text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-sm transition-colors">
+            <Plus size={16} /> Quick Action
+          </button>
+        </Link>
+        
         {mounted && (
           <button 
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}

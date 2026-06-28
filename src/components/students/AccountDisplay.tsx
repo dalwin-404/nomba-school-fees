@@ -33,7 +33,7 @@ export function AccountDisplay({ account }: AccountDisplayProps) {
       )}
 
       <div className="relative z-10">
-        <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4">
+        <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">
           Assigned Virtual Account
         </h3>
 
@@ -51,10 +51,10 @@ export function AccountDisplay({ account }: AccountDisplayProps) {
           <div className="space-y-4">
             <div className="flex justify-between items-end">
               <div>
-                <p className="text-4xl sm:text-5xl font-mono font-bold text-foreground tracking-widest">
+                <p className="text-2xl sm:text-3xl font-mono font-bold text-foreground tracking-wider">
                   {account.account_number}
                 </p>
-                <p className="text-lg font-medium text-primary mt-2">
+                <p className="text-base font-medium text-primary mt-1">
                   {account.bank_name}
                 </p>
               </div>
@@ -69,8 +69,8 @@ export function AccountDisplay({ account }: AccountDisplayProps) {
             </div>
 
             <div className="pt-4 border-t border-border/50">
-              <p className="text-sm text-muted-foreground mb-1">Account Name</p>
-              <p className="font-medium">{account.account_name}</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">Account Name</p>
+              <p className="text-sm font-medium">{account.account_name}</p>
             </div>
           </div>
         )}

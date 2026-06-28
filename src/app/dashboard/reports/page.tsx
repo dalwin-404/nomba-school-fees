@@ -6,7 +6,7 @@ import { DashboardStats } from '@/components/dashboard/DashboardStats';
 import { ReconciliationSummary } from '@/components/dashboard/ReconciliationSummary';
 import { Button } from '@/components/ui/Button';
 import { Alert } from '@/components/ui/Alert';
-import { Download } from 'lucide-react';
+import { Download, BarChart3 } from 'lucide-react';
 
 export default function ReportsPage() {
   const { stats, loading, error, fetchDashboard } = useDashboard();
@@ -66,11 +66,9 @@ export default function ReportsPage() {
           <ReconciliationSummary stats={stats} />
         </div>
         {/* Placeholder for more charts in a real app */}
-        <div className="bg-card rounded-xl border border-border p-6 flex items-center justify-center text-center text-muted-foreground min-h-[300px]">
-          <div>
-            <p className="text-4xl mb-3">📊</p>
-            <p>More detailed class-level analytics<br/>coming soon.</p>
-          </div>
+        <div className="bg-card rounded-xl border border-border p-6 flex flex-col items-center justify-center text-center text-muted-foreground min-h-[300px]">
+          <BarChart3 size={48} className="mb-4 text-muted-foreground/30 stroke-[1.5]" />
+          <p>More detailed class-level analytics<br/>coming soon.</p>
         </div>
       </div>
     </div>

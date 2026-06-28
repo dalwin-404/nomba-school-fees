@@ -83,7 +83,7 @@ export default function StudentDetailPage({ params }: { params: Promise<{ id: st
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-card p-6 rounded-xl border border-border shadow-sm">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <h2 className="text-2xl font-bold text-foreground">{student.first_name} {student.last_name}</h2>
+            <h2 className="text-xl font-bold tracking-tight text-foreground">{student.first_name} {student.last_name}</h2>
             <PaymentStatusBadge status={status} />
           </div>
           <p className="text-muted-foreground">Class: {student.class_level || 'N/A'} • {student.parent_email || 'No email'} • {student.parent_phone || 'No phone'}</p>
@@ -114,7 +114,7 @@ export default function StudentDetailPage({ params }: { params: Promise<{ id: st
           )}
 
           <Card className="p-6">
-            <h3 className="font-semibold mb-4">Fee Summary</h3>
+            <h3 className="text-base font-semibold mb-4">Fee Summary</h3>
             <div className="space-y-4">
               <div className="flex justify-between border-b border-border/50 pb-2">
                 <span className="text-muted-foreground">Expected</span>
@@ -142,7 +142,7 @@ export default function StudentDetailPage({ params }: { params: Promise<{ id: st
 
         {/* Right Column: Transactions */}
         <div className="lg:col-span-2 space-y-4">
-          <h3 className="font-semibold text-lg">Transaction History</h3>
+          <h3 className="text-base font-semibold">Transaction History</h3>
           <TransactionTable 
             transactions={transactions?.map((t: any) => ({
               ...t,
@@ -150,6 +150,7 @@ export default function StudentDetailPage({ params }: { params: Promise<{ id: st
             }))} 
             loading={false} 
             emptyMessage="No payments received yet."
+            hideStudentColumn={true}
           />
         </div>
       </div>

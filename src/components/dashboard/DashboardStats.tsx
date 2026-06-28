@@ -1,6 +1,6 @@
 import { formatNaira } from '@/lib/constants';
 import { Card } from '@/components/ui/Card';
-import { Users, Banknote, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Users, Banknote, CheckCircle, AlertTriangle, TrendingUp, TrendingDown } from 'lucide-react';
 
 interface DashboardStatsProps {
   totalStudents: number;
@@ -29,6 +29,8 @@ export function DashboardStats({ stats }: { stats: DashboardStatsProps | null })
       icon: <Users size={24} />,
       colorClass: 'text-primary',
       bgClass: 'bg-primary/10',
+      trend: '+12%',
+      trendUp: true,
     },
     {
       title: 'Expected Fees',
@@ -36,6 +38,8 @@ export function DashboardStats({ stats }: { stats: DashboardStatsProps | null })
       icon: <Banknote size={24} />,
       colorClass: 'text-amber-500',
       bgClass: 'bg-amber-500/10',
+      trend: '+5.2%',
+      trendUp: true,
     },
     {
       title: 'Received Fees',
@@ -43,6 +47,8 @@ export function DashboardStats({ stats }: { stats: DashboardStatsProps | null })
       icon: <CheckCircle size={24} />,
       colorClass: 'text-emerald-500',
       bgClass: 'bg-emerald-500/10',
+      trend: '+18%',
+      trendUp: true,
     },
     {
       title: 'Outstanding',
@@ -50,6 +56,8 @@ export function DashboardStats({ stats }: { stats: DashboardStatsProps | null })
       icon: <AlertTriangle size={24} />,
       colorClass: 'text-rose-500',
       bgClass: 'bg-rose-500/10',
+      trend: '-2.4%',
+      trendUp: false,
     },
   ];
 
@@ -60,11 +68,17 @@ export function DashboardStats({ stats }: { stats: DashboardStatsProps | null })
           <div className="flex-shrink-0 flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-slate-600">
             {card.icon}
           </div>
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <p className="text-2xl font-bold text-foreground leading-none">{card.value}</p>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-col mb-1 overflow-hidden">
+              <p className="text-xl xl:text-2xl font-bold text-foreground leading-none truncate" title={card.value}>{card.value}</p>
             </div>
-            <p className="text-xs font-medium text-muted-foreground leading-tight">{card.title}</p>
+            <p className="text-xs font-medium text-muted-foreground leading-tight flex items-center gap-1.5 mt-2 cursor-help" title={`Data for ${card.title}`}>
+              <span className={`inline-flex items-center gap-0.5 font-bold ${card.trendUp ? 'text-emerald-500' : 'text-rose-500'}`}>
+                {card.trendUp ? <TrendingUp size={12} strokeWidth={3} /> : <TrendingDown size={12} strokeWidth={3} />}
+                {card.trend}
+              </span>
+              <span>{card.title}</span>
+            </p>
           </div>
         </Card>
       ))}

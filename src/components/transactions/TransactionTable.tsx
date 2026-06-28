@@ -8,9 +8,10 @@ interface TransactionTableProps {
   transactions: any[];
   loading: boolean;
   emptyMessage?: string;
+  hideStudentColumn?: boolean;
 }
 
-export function TransactionTable({ transactions, loading, emptyMessage = "No transactions found." }: TransactionTableProps) {
+export function TransactionTable({ transactions, loading, emptyMessage = "No transactions found.", hideStudentColumn = false }: TransactionTableProps) {
   if (loading) {
     return <div className="h-64 rounded-xl skeleton w-full"></div>;
   }
@@ -43,11 +44,11 @@ export function TransactionTable({ transactions, loading, emptyMessage = "No tra
         <TableHeader>
           <TableRow>
             <TableHead>Date & Time</TableHead>
-            <TableHead>Student / Ref</TableHead>
+            <TableHead>{hideStudentColumn ? 'Ref' : 'Student / Ref'}</TableHead>
             <TableHead>Sender</TableHead>
             <TableHead className="text-right">Amount</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead className="text-right">Action</TableHead>
+            <TableHead className="text-right w-12"><span className="sr-only">Action</span></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -60,17 +61,17 @@ export function TransactionTable({ transactions, loading, emptyMessage = "No tra
           ) : (
             transactions.map((txn) => (
               <TableRow key={txn.id} className="hover:bg-muted/30">
-                <TableCell className="text-sm text-muted-foreground whitespace-nowrap">
+                <TableCell className="text-sm text-muted-foreground">
                   {formatDate(txn.received_at)}
                 </TableCell>
                 <TableCell>
-                  {txn.students && (
-                    <div className="font-medium text-foreground mb-1">
+                  {txn.students && !hideStudentColumn && (
+                    <div className="font-medium text-foreground mb-1 whitespace-nowrap">
                       {txn.students.first_name} {txn.students.last_name}
                     </div>
                   )}
                   <div 
-                    className="font-mono text-xs text-muted-foreground bg-muted inline-block px-1.5 py-0.5 rounded max-w-[100px] sm:max-w-[150px] truncate align-bottom"
+                    className="font-mono text-xs text-muted-foreground bg-muted inline-block px-1.5 py-0.5 rounded max-w-[80px] sm:max-w-[120px] truncate align-bottom"
                     title={txn.nomba_txn_ref}
                   >
                     {txn.nomba_txn_ref}
@@ -118,9 +119,11 @@ export function TransactionTable({ transactions, loading, emptyMessage = "No tra
             <div key={txn.id} className="bg-card border border-border rounded-xl p-4 shadow-sm space-y-3">
               <div className="flex justify-between items-start">
                 <div>
-                  <div className="font-medium text-foreground">
-                    {txn.students ? `${txn.students.first_name} ${txn.students.last_name}` : 'Unknown Student'}
-                  </div>
+                  {!hideStudentColumn && (
+                    <div className="font-medium text-foreground">
+                      {txn.students ? `${txn.students.first_name} ${txn.students.last_name}` : 'Unknown Student'}
+                    </div>
+                  )}
                   <div className="font-mono text-xs text-muted-foreground mt-0.5 max-w-[200px] truncate">
                     {txn.nomba_txn_ref}
                   </div>

@@ -29,10 +29,12 @@ export function StudentCard({ student }: StudentCardProps) {
   const status = student.reconciliation_log?.[0]?.status || student.status || 'pending';
 
   const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+  const percentPaid = expected > 0 ? Math.min(100, Math.round((received / expected) * 100)) : 0;
+  const ringColor = percentPaid >= 100 ? 'text-emerald-500' : percentPaid > 0 ? 'text-amber-500' : 'text-rose-500';
 
   return (
     <Link href={`/dashboard/students/${student.id}`} className="block group">
-      <div className="relative w-full h-48 bg-card rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-border">
+      <div className="relative w-full h-48 bg-card rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden border border-border">
         
         {/* Wavy Background SVG */}
         <div className="absolute inset-0 z-0">
@@ -76,10 +78,23 @@ export function StudentCard({ student }: StudentCardProps) {
 
           {/* Right Side (Avatar over card background) */}
           <div className="w-24 flex flex-col items-center justify-center pl-2">
-            <div className={`w-20 h-20 rounded-full border-4 border-white dark:border-slate-800 bg-slate-100 flex items-center justify-center shadow-md transform group-hover:scale-110 transition-transform duration-300 overflow-hidden relative`}>
-              <span className={`text-3xl font-black ${theme.text} opacity-80`}>
-                {initials}
-              </span>
+            <div className="relative w-20 h-20 transform group-hover:scale-110 transition-transform duration-300">
+              {/* Circular Progress Ring */}
+              <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="46" fill="transparent" stroke="currentColor" strokeWidth="6" className="text-muted/30" />
+                <circle 
+                  cx="50" cy="50" r="46" fill="transparent" stroke="currentColor" strokeWidth="6" 
+                  strokeLinecap="round"
+                  className={ringColor}
+                  strokeDasharray={`${percentPaid * 2.89} 289`}
+                />
+              </svg>
+              {/* Avatar Center */}
+              <div className="absolute inset-2 rounded-full border-[3px] border-card bg-slate-100 flex items-center justify-center overflow-hidden">
+                <span className={`text-2xl font-black ${theme.text} opacity-80`}>
+                  {initials}
+                </span>
+              </div>
             </div>
             {accountNo && (
               <div className="mt-3 text-center">
