@@ -80,7 +80,7 @@ export default function DashboardPage() {
       {/* Quick Actions Bar */}
       <div className="flex flex-wrap gap-3 mb-6 p-1">
         <Link href="/dashboard/students/new">
-          <Button variant="default" className="shadow-md hover:shadow-lg transition-shadow">
+          <Button variant="primary" className="shadow-md hover:shadow-lg transition-shadow">
             <Plus size={16} className="mr-2" /> Add Student
           </Button>
         </Link>

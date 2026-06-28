@@ -45,7 +45,7 @@ export function RevenueChart() {
             <Tooltip 
               contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)' }}
               itemStyle={{ color: '#8b5cf6', fontWeight: 'bold' }}
-              formatter={(value: number) => [`₦${value.toLocaleString()}`, 'Revenue']}
+              formatter={(value: any) => [`₦${value.toLocaleString()}`, 'Revenue']}
             />
             <Area 
               type="monotone" 
