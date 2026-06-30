@@ -56,6 +56,13 @@ export default function DashboardPage() {
   };
 
   const currentDate = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+  
+  const hour = new Date().getHours();
+  let greeting = '';
+  if (hour >= 4 && hour < 12) greeting = 'Good morning';
+  else if (hour >= 12 && hour < 18) greeting = 'Good afternoon';
+  else if (hour >= 18 && hour < 22) greeting = 'Good evening';
+  else greeting = 'Good night';
 
   return (
     <div className="space-y-6">
@@ -63,7 +70,7 @@ export default function DashboardPage() {
 
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight">Good morning, Admin 👋</h2>
+          <h2 className="text-2xl font-bold tracking-tight">{greeting}, Admin 👋</h2>
           <p className="text-muted-foreground mt-1">Here is your school&apos;s financial overview for {currentDate}.</p>
         </div>
         <div className="flex flex-wrap gap-2">

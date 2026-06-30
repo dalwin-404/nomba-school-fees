@@ -105,11 +105,7 @@ export default function LoginPage() {
                 }
                 className="focus:border-amber-400 focus:ring-amber-400/20"
               />
-              <div className="absolute right-0 top-0 mt-0.5">
-                <Link href="#" className="text-xs font-semibold text-amber-500 hover:text-amber-600">
-                  Forgot Password?
-                </Link>
-              </div>
+
             </div>
             
             <div className="pt-4">
