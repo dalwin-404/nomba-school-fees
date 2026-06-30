@@ -33,7 +33,7 @@ export function Sidebar({ mobileOpen, setMobileOpen, isCollapsed, setIsCollapsed
 
       {/* Sidebar */}
       <aside 
-        className={`fixed top-0 bottom-0 left-0 z-50 bg-sidebar-bg text-sidebar-text shadow-xl transition-all duration-300 ease-in-out lg:translate-x-0 overflow-x-hidden ${
+        className={`fixed top-0 bottom-0 left-0 z-50 bg-sidebar-bg text-sidebar-text shadow-xl transition-all duration-300 ease-in-out md:translate-x-0 overflow-x-hidden ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         } ${isCollapsed ? 'w-[88px]' : 'w-56'} flex flex-col`}
       >
@@ -92,7 +92,7 @@ export function Sidebar({ mobileOpen, setMobileOpen, isCollapsed, setIsCollapsed
           
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="hidden lg:flex w-full items-center justify-center py-2 mt-2 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 hover:bg-muted rounded-md"
+            className="hidden md:flex w-full items-center justify-center py-2 mt-2 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 hover:bg-muted rounded-md"
             title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
           >
             {isCollapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={20} />}

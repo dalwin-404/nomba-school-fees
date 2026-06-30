@@ -81,7 +81,7 @@ export function Header({ setMobileOpen, isCollapsed }: { setMobileOpen: (open: b
       <div className="flex items-center gap-4">
         <button
           type="button"
-          className="text-muted-foreground hover:text-foreground focus:outline-none lg:hidden"
+          className="text-muted-foreground hover:text-foreground focus:outline-none md:hidden"
           onClick={() => setMobileOpen(true)}
         >
           <span className="sr-only">Open sidebar</span>

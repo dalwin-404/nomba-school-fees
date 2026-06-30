@@ -18,7 +18,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         <Sidebar mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
       </div>
       
-      <div className={`transition-all duration-300 ease-in-out ${isCollapsed ? 'lg:pl-[88px]' : 'lg:pl-56'} flex flex-col min-h-screen print:pl-0 print:block`}>
+      <div className={`transition-all duration-300 ease-in-out ${isCollapsed ? 'md:pl-[88px]' : 'md:pl-56'} flex flex-col min-h-screen print:pl-0 print:block`}>
         <div className="print:hidden">
           <Header setMobileOpen={setMobileOpen} isCollapsed={isCollapsed} />
         </div>
